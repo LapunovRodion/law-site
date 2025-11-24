@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: law-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lawdb
+      POSTGRES_USER: lawuser
+      POSTGRES_PASSWORD: strongpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
