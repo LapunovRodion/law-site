@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "lessons",
+  "info": {
+    "singularName": "lesson",
+    "pluralName": "lessons",
+    "displayName": "Lesson"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "semestr": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::semestr.semestr",
+      "inversedBy": "lessons"
+    },
+    "study_group": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::study-group.study-group",
+      "inversedBy": "lessons"
+    },
+    "subject": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::subject.subject",
+      "inversedBy": "lessons"
+    },
+    "teacher": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::teacher.teacher",
+      "inversedBy": "lessons"
+    },
+    "room": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::room.room",
+      "inversedBy": "lessons"
+    },
+    "time_slot": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::time-slot.time-slot",
+      "inversedBy": "lessons"
+    },
+    "weekType": {
+      "type": "enumeration",
+      "enum": [
+        "all",
+        "odd",
+        "even",
+        "custom"
+      ]
+    },
+    "course_load": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course-load.course-load",
+      "inversedBy": "lessons"
+    },
+    "text": {
+      "type": "text"
+    },
+    "lesson_override": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::lesson-override.lesson-override",
+      "inversedBy": "lessons"
+    }
+  }
+}

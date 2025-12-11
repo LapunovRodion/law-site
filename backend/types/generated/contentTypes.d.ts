@@ -430,6 +430,363 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCourseLoadCourseLoad extends Struct.CollectionTypeSchema {
+  collectionName: 'course_loads';
+  info: {
+    displayName: 'CourseLoad';
+    pluralName: 'course-loads';
+    singularName: 'course-load';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    lessonPerWeek: Schema.Attribute.Integer & Schema.Attribute.Required;
+    lessons: Schema.Attribute.Relation<'oneToMany', 'api::lesson.lesson'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-load.course-load'
+    > &
+      Schema.Attribute.Private;
+    note: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    roomType: Schema.Attribute.Enumeration<
+      ['lecture', 'seminar', 'computer', 'other ']
+    >;
+    semestr: Schema.Attribute.Relation<'manyToOne', 'api::semestr.semestr'>;
+    study_group: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::study-group.study-group'
+    >;
+    subject: Schema.Attribute.Relation<'manyToOne', 'api::subject.subject'>;
+    teacher: Schema.Attribute.Relation<'manyToOne', 'api::teacher.teacher'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    weekType: Schema.Attribute.Enumeration<['all', 'odd', 'even', 'custom ']> &
+      Schema.Attribute.Required;
+  };
+}
+
+export interface ApiLessonOverrideLessonOverride
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'lesson_overrides';
+  info: {
+    displayName: 'LessonOverride';
+    pluralName: 'lesson-overrides';
+    singularName: 'lesson-override';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    action: Schema.Attribute.Enumeration<['cancel', 'move', 'replace']> &
+      Schema.Attribute.Required;
+    comment: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date & Schema.Attribute.Required;
+    lessons: Schema.Attribute.Relation<'oneToMany', 'api::lesson.lesson'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::lesson-override.lesson-override'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    study_group: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::study-group.study-group'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiLessonLesson extends Struct.CollectionTypeSchema {
+  collectionName: 'lessons';
+  info: {
+    displayName: 'Lesson';
+    pluralName: 'lessons';
+    singularName: 'lesson';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    course_load: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::course-load.course-load'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    lesson_override: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::lesson-override.lesson-override'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::lesson.lesson'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    room: Schema.Attribute.Relation<'manyToOne', 'api::room.room'>;
+    semestr: Schema.Attribute.Relation<'manyToOne', 'api::semestr.semestr'>;
+    study_group: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::study-group.study-group'
+    >;
+    subject: Schema.Attribute.Relation<'manyToOne', 'api::subject.subject'>;
+    teacher: Schema.Attribute.Relation<'manyToOne', 'api::teacher.teacher'>;
+    text: Schema.Attribute.Text;
+    time_slot: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::time-slot.time-slot'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    weekType: Schema.Attribute.Enumeration<['all', 'odd', 'even', 'custom']>;
+  };
+}
+
+export interface ApiRoomRoom extends Struct.CollectionTypeSchema {
+  collectionName: 'rooms';
+  info: {
+    displayName: 'Room';
+    pluralName: 'rooms';
+    singularName: 'room';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    lessons: Schema.Attribute.Relation<'oneToMany', 'api::lesson.lesson'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::room.room'> &
+      Schema.Attribute.Private;
+    number: Schema.Attribute.Integer & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    type: Schema.Attribute.Enumeration<
+      ['lecture', 'seminar', 'computer', 'other']
+    > &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSemestrSemestr extends Struct.CollectionTypeSchema {
+  collectionName: 'semestrs';
+  info: {
+    displayName: 'Semester';
+    pluralName: 'semestrs';
+    singularName: 'semestr';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    course_loads: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-load.course-load'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    endDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    lessons: Schema.Attribute.Relation<'oneToMany', 'api::lesson.lesson'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::semestr.semestr'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    startDAte: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    weekCount: Schema.Attribute.Integer;
+  };
+}
+
+export interface ApiStudyGroupStudyGroup extends Struct.CollectionTypeSchema {
+  collectionName: 'study_groups';
+  info: {
+    displayName: 'StudyGroup ';
+    pluralName: 'study-groups';
+    singularName: 'study-group';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Course: Schema.Attribute.Integer & Schema.Attribute.Required;
+    course_loads: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-load.course-load'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    educationLevel: Schema.Attribute.Enumeration<
+      ['bachelor', 'master', 'postgraduate', 'other']
+    > &
+      Schema.Attribute.Required;
+    groupNumber: Schema.Attribute.String & Schema.Attribute.Required;
+    lesson_overrides: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::lesson-override.lesson-override'
+    >;
+    lessons: Schema.Attribute.Relation<'oneToMany', 'api::lesson.lesson'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::study-group.study-group'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSubjectSubject extends Struct.CollectionTypeSchema {
+  collectionName: 'subjects';
+  info: {
+    displayName: 'Subject ';
+    pluralName: 'subjects';
+    singularName: 'subject';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    course_loads: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-load.course-load'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    lessons: Schema.Attribute.Relation<'oneToMany', 'api::lesson.lesson'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subject.subject'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    shortName: Schema.Attribute.String & Schema.Attribute.Required;
+    type: Schema.Attribute.Enumeration<['lecture', 'seminar', 'practice ']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTeacherTeacher extends Struct.CollectionTypeSchema {
+  collectionName: 'teachers';
+  info: {
+    displayName: 'Teacher ';
+    pluralName: 'teachers';
+    singularName: 'teacher';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    course_loads: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-load.course-load'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    fullName: Schema.Attribute.String & Schema.Attribute.Required;
+    lessons: Schema.Attribute.Relation<'oneToMany', 'api::lesson.lesson'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::teacher.teacher'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    shortName: Schema.Attribute.String & Schema.Attribute.Required;
+    slug: Schema.Attribute.UID<'fullName'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTimeSlotTimeSlot extends Struct.CollectionTypeSchema {
+  collectionName: 'time_slots';
+  info: {
+    displayName: 'TimeSlot';
+    pluralName: 'time-slots';
+    singularName: 'time-slot';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dayOfWeek: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 7;
+          min: 1;
+        },
+        number
+      >;
+    endTime: Schema.Attribute.Time & Schema.Attribute.Required;
+    lessons: Schema.Attribute.Relation<'oneToMany', 'api::lesson.lesson'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::time-slot.time-slot'
+    > &
+      Schema.Attribute.Private;
+    pairNumber: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    publishedAt: Schema.Attribute.DateTime;
+    StartTime: Schema.Attribute.Time & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -940,6 +1297,15 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::course-load.course-load': ApiCourseLoadCourseLoad;
+      'api::lesson-override.lesson-override': ApiLessonOverrideLessonOverride;
+      'api::lesson.lesson': ApiLessonLesson;
+      'api::room.room': ApiRoomRoom;
+      'api::semestr.semestr': ApiSemestrSemestr;
+      'api::study-group.study-group': ApiStudyGroupStudyGroup;
+      'api::subject.subject': ApiSubjectSubject;
+      'api::teacher.teacher': ApiTeacherTeacher;
+      'api::time-slot.time-slot': ApiTimeSlotTimeSlot;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

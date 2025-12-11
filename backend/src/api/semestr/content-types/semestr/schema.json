@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "semestrs",
+  "info": {
+    "singularName": "semestr",
+    "pluralName": "semestrs",
+    "displayName": "Semester"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "startDAte": {
+      "type": "datetime",
+      "required": true
+    },
+    "endDate": {
+      "type": "datetime",
+      "required": true
+    },
+    "weekCount": {
+      "type": "integer"
+    },
+    "course_loads": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::course-load.course-load",
+      "mappedBy": "semestr"
+    },
+    "lessons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lesson.lesson",
+      "mappedBy": "semestr"
+    }
+  }
+}

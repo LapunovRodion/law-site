@@ -1,0 +1,71 @@
+{
+  "kind": "collectionType",
+  "collectionName": "course_loads",
+  "info": {
+    "singularName": "course-load",
+    "pluralName": "course-loads",
+    "displayName": "CourseLoad"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "semestr": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::semestr.semestr",
+      "inversedBy": "course_loads"
+    },
+    "study_group": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::study-group.study-group",
+      "inversedBy": "course_loads"
+    },
+    "subject": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::subject.subject",
+      "inversedBy": "course_loads"
+    },
+    "teacher": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::teacher.teacher",
+      "inversedBy": "course_loads"
+    },
+    "lessonPerWeek": {
+      "type": "integer",
+      "required": true
+    },
+    "weekType": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "all",
+        "odd",
+        "even",
+        "custom "
+      ]
+    },
+    "roomType": {
+      "type": "enumeration",
+      "enum": [
+        "lecture",
+        "seminar",
+        "computer",
+        "other "
+      ]
+    },
+    "note": {
+      "type": "text"
+    },
+    "lessons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lesson.lesson",
+      "mappedBy": "course_load"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "lesson_overrides",
+  "info": {
+    "singularName": "lesson-override",
+    "pluralName": "lesson-overrides",
+    "displayName": "LessonOverride"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "lessons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lesson.lesson",
+      "mappedBy": "lesson_override"
+    },
+    "study_group": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::study-group.study-group",
+      "inversedBy": "lesson_overrides"
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "action": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "cancel",
+        "move",
+        "replace"
+      ]
+    },
+    "comment": {
+      "type": "text"
+    }
+  }
+}

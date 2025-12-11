@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "time_slots",
+  "info": {
+    "singularName": "time-slot",
+    "pluralName": "time-slots",
+    "displayName": "TimeSlot"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "dayOfWeek": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "max": 7
+    },
+    "pairNumber": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "StartTime": {
+      "type": "time",
+      "required": true
+    },
+    "endTime": {
+      "type": "time",
+      "required": true
+    },
+    "lessons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lesson.lesson",
+      "mappedBy": "time_slot"
+    }
+  }
+}
